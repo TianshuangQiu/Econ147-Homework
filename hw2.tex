@@ -1,0 +1,385 @@
+\documentclass[12pt]{article}
+\usepackage[usenames]{color} %used for font color
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{wasysym}
+\usepackage[utf8]{inputenc} %useful to type directly diacritic characters
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{mathtools}
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+\graphicspath{ {./} }
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\prob}{\mathbb{P}}
+\newcommand{\degrees}{^{\circ}}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\author{Tianshuang (Ethan) Qiu}
+\begin{document}
+\title{Algorithmic Economics, PS2}
+\maketitle
+
+\section*{Problem 1}
+\subsection*{1}
+\paragraph*{Forward}
+Let $\exists p \in \Delta(X)$ with $\mu(A) = \sum_{x\in A}p(x)$
+for all $A \in X$. Since $p$ is a lottery, $p(x_i)\geq 0$, thus 
+$\mu(A)\sum_{x\in A}p(x) \geq 0$. Since $\sum_{x\in X} p(x)=1$, then 
+$\mu(X) = 1$. For disjoint sets $A, B \subset X$, we can find $p$ such that 
+$\mu(A \cup B) = \sum_{x \in A}p(x) +\sum_{x \in B}p(x) = \mu(A) + \mu(B)$ due 
+to disjoint sets (elements are distinct within A, B). Thus we have shown all 
+properties of probability measures and $\mu$ is a PM.
+
+\paragraph*{Backward}
+Now let $\mu$ be a probability measure, then for any 
+$A = \{x_1, x_2,$ $ \ldots, x_n\}  \subseteq X$, 
+we construct a lottery $p = (\mu(x_1), \mu(x_2), \ldots,$ $ \mu(x_n), 1-\mu(A), 0, \ldots)$.
+By our construction we have $p(X)=1$, and since $\mu$ is a probability measure, $p(x_i)\geq 0$
+These satisfy the properties of the lottery, so we have found $p \in \Delta(x)$ with 
+$\mu(A)=\sum_{x\in A}p(x)$
+
+$\blacksquare$
+\newpage
+
+
+
+\subsection*{2}
+Let $v \in \R^d$, then $u_v(p) = \sum_{x\in X} v_x p_x \in \R$. 
+Let $p, q \in \Delta$, by our previous definition $u_v(p) = v \cdot p$, which is an element in 
+the reals. By orderedness of the real numbers, any $r_1, r_2 \in \R$ satisfies $r_1 \geq r_2$ or 
+$r_2 \geq r_1$, thus $p \succeq q$ or $q \succeq p$, and it is complete.
+
+Following our previous conclusion, since the function $u_v$ maps to real numbers, 
+which satisfy transitivity by ordered field theorem. $p \succeq q, q \succeq r \to v \cdot p \geq v \cdot q$, $v \cdot q \geq v \cdot r$.
+Thus by order of reals we have $v \cdot p \geq v \cdot r$, and $p \succeq r$, thus it is transitive.
+
+$\blacksquare$
+\newpage
+
+
+\subsection*{3}
+Let $p, q, r \in \Delta(X), \lambda \in (0, 1)$. For some $v \in \R^d$, 
+$p \succeq_v q \to v \cdot p \geq v \cdot q$. 
+\[
+\lambda p + (1-\lambda)r = \lambda \sum_{x\in X} v_x p_x + (1-\lambda) \sum_{x\in X} v_x r_x
+\]
+\[
+\lambda q + (1-\lambda)r = \lambda \sum_{x\in X} v_x q_x + (1-\lambda) \sum_{x\in X} v_x r_x
+\]
+Since we are operating in the reals which are well ordered, we can subtract $(1-\lambda) \sum_{x\in X} v_x r_x \in \R$ 
+from both equations to see that we are really comparing $\lambda v \cdot p, \lambda v \cdot q$. Since $\lambda \in (0, 1)$, 
+we can safely multiply by its inverse and not affect the ordering. Thus have shown that the expression is equivalent to comparing 
+$v \cdot p, v \cdot q$, and by definition of $p \succeq_v q$ iff $v \cdot p \geq v \cdot q$
+
+$\blacksquare$
+\newpage
+
+
+\subsection*{4}
+I would prefer $p_A$, and I would prefer $p_B'$
+
+Under $\succeq_v$, we can compute the expected utility of all values. Let $v = [v_1, v_2, v_3]$
+\[u_v(p_A) = v_2\]
+\[u_v(p_B) = 0.01v_1 + 0.89v_2 + 0.1 v_3\]
+\[u_v(p_{A'}) = 0.89v_1 + 0.11v_2\]
+\[u_v(p_{B'}) = 0.9v_1+0.1 v_3\]
+
+By our preference relation we have $p_A \succeq p_B$ and $p_{B'} \succeq p_{A'}$. 
+By using the equivalent definition over $\geq$, we can see that $u_v(p_{B'}) \geq u_v(p_{A'})$, 
+which implies that $0.01v_1 + 0.1v_3 - 0.11v_2 \geq 0$. Then by $p_A \succeq p_B$ we have 
+$0.11v_2-0.01v_1-0.1v_3 \geq 0$, then we can rearrange to get
+\[0.11v_2 \leq 0.01v_1 + 0.1v_3\]
+\[0.11v_2 \geq 0.01v_1 + 0.1v_3\]
+If we are only considering strict preferences, then we would remove the equal sign and there would 
+be no solution to this system of equations under real vectors.
+Thus it cannot be consistent with any preference relation.
+
+$\blacksquare$
+\newpage
+
+\subsection*{5}
+\paragraph*{Nonempty}
+Consider an arbitrary preference over $\Delta(X)$ that ranks the degenerate lotteries as $[x_1, x_2, \ldots, x_n]$ where 
+$n = |X|$ and $x_1$ is the least preferred while $x_n$ is the most preferred. We can then construct $v = [1, 2, \ldots, n]$.
+Then let $x_m, x_k$ be elements of $X$ and WLOG let $m \geq k$. Then our preference $\succeq_v$ computes $v \cdot \mathbf{1}_m = m$ 
+and $v \cdot \mathbf{1}_k = k$. Since $m \geq k, m^2 \geq k^2$, thus we have found one such $v$ and the set must be nonempty.
+
+\paragraph{Implication}
+Let $\succeq_v \succeq_w \in L(\geq)$, let $p,q \in X$ such that $p \succeq_v q$ and 
+$p \succeq_w q$. Per definition of $\succeq_v$, we have $v \cdot p \geq v \cdot q$, and 
+$w \cdot p \geq w \cdot q$. 
+Let $u = \alpha v + \beta w$, then 
+\[u \cdot p = \sum_{x \in X} u_x p_x = \sum_{x \in X} \alpha v_x p_x + \beta w_x p_x \]
+\[u \cdot q = \sum_{x \in X} u_x q_x = \sum_{x \in X} \alpha v_x q_x + \beta w_x q_x \]
+
+By $p \succeq_v q$ and  $p \succeq_w q$ we have $\sum_{x \in X} v_x p_x \geq \sum_{x \in X} v_x q_x$, 
+and $\sum_{x \in X} w_x p_x \geq \sum_{x \in X} w_x q_x$, thus $u \cdot p \geq u \cdot q$, and 
+$\succeq_{\alpha v + \beta w} \in L(\geq)$
+
+$\blacksquare$
+\newpage
+
+
+\subsection*{6}
+\paragraph*{Example}
+Let $|X|={a,b,c}$, and we prefer it in the order of $a \geq b \geq c$. Let $p = [0.8, 0.1, 0.1]$, 
+q = $[0.5, 0.5, 0]$. 
+
+Let $v = [1, 0.9, 0.8]$, $v \cdot \mathbf{1}_a \geq v \cdot \mathbf{1}_b \geq v \cdot \mathbf{1}_c$, 
+so $\succeq_v \in L(\geq)$. $u_v(p) = 0.97 > u_v(q)= 0.95$, so $p \succ_v q$.
+
+Let $w = [1, 0.9, -100]$, $w \cdot \mathbf{1}_a \geq w \cdot \mathbf{1}_b \geq w \cdot \mathbf{1}_c$, 
+so $\succeq_v \in L(\geq)$. $u_w(p) = -9.11 < u(q) = 0.95$
+
+
+\paragraph*{Proof}Suppose $|X|=2$, and by definition of $L(\geq)$, $p \geq q \iff p \succeq q$. 
+Then we define degenerate lotteries $a=[1,0], b=[0,1]$. WLOG let us define a 
+preference of $a \geq b$. Then we must have $v \cdot a \geq v \cdot b$. Then by definition of $u_v$, 
+we have $v_0 \geq v_1$. We can repeat the above reasoning to get $w_0 \geq w_1$
+Then since $p \succ_v q$, we have
+\[v \cdot p > v \cdot q\]
+\[v_0 p_0 + v_1 p_1 > v_0 q_0 + v_1 q_1\]
+Since $p, q$ are lotteries, $p_0 + p_1 = 1, q_0+q_1=1$, thus
+\[v_0 p_0 + v_1 (1-p_0) > v_0 q_0 + v_1 (1-q_0)\]
+\[v_0p_0 + v_1-v_1p_0 > v_0 q_0 + v_1+v_1-v_1q_0\]
+\[p_0(v_0-v_1) > q_0(v_0-v_1)\]
+\[p_0 > q_0\]
+
+However, since we also have $q \succ_w p$, we repeat the above derivation to get 
+\[p_0 < q_0\]
+This is a contradiction, and then $|X|>2$. When $|X|=3$, $p_0+p_1+p_2=1$, and 
+this gives one more degree of freedom when solving the system of equation, so we 
+can successfully find examples. 
+\newpage
+
+
+\subsection*{7}
+
+\paragraph*{Forward}
+Let $p, q \in \Delta(X)$ and $p \succeq q$ for all $\succeq \in L(\geq)$. Suppose the $\exists x \in X$ 
+such that $p(U(x))<q(U(x))$. Then this means that $\sum_{z \in U(x)}p_z < \sum_{z \in U(x)}q_z$. Then define 
+$v = [1 \text{ if $y \in u(X)$}, 0 \text{ otherwise}]$.
+Consider arbitrary $a, b \in X$, WLOG let $a \geq b$. 
+
+If $a \geq b \geq x$, $u_v(a)=u_v(b)=u_v(x)=1$.
+If $a \geq x \geq b$, then $u_v(a) = u_v(x) = 1 \geq u_v(b) = 0$. If $x \geq a \geq b$, then 
+$u_v(x) = 1 \geq u_v(a) = u_v(b) = 0$. 
+To make the above preferences strict, consider that we add $\epsilon$ to the least favorite, 
+$2 \epsilon$ to the second, and $n \epsilon$ to the favorite. This small addition makes the preference strict.
+In any case, we see that $u_v(a) \geq u_v(b)$, thus $\succeq_v \in L(\geq)$
+
+
+$u_v(p) = v \cdot p$, $u_v(q) = v \cdot q$. By our definition of $v$, since $\epsilon \to 0$,  
+$v \cdot p = \sum_{z \in U(x)}p_z <  \sum_{z \in U(x)}q_z = v \cdot p$. 
+
+This is a contradiction to the property that $p \succeq q$ for all $\succeq \in L(\geq)$. Thus such an 
+$x$ does not exist and $p(U(x))\geq(U(x)) \forall x \in X$
+
+
+\paragraph*{Backward}
+Let $p(U(x)) \geq q(U(x)) \forall x \in X$. Then assume that $\exists \succeq_v \in L(\geq)$ such that 
+$p \prec_v q$
+
+Consider a re-ordering of the vectors such that the least preferred element is the first element and the 
+most perferred element last. Let $X = [x_1, x_2, \ldots, x_n]$. Since $p \prec_v q$, $v \cdot p < v \cdot q$.
+Since $\succeq_v \in L(\geq)$, $v_i \geq v_j \forall i \geq j$
+Thus we can write
+\[\sum_{i=j}^n v_i p_i = \sum_{i=1}^n v_1 p_i + \sum_{i=2}^n (v_2-v_1) p_i + \cdots + (v_n-v_{n-1})p_n\]
+\[\sum_{i=j}^n v_i q_i = \sum_{i=1}^n v_1 q_i + \sum_{i=2}^n (v_2-v_1) q_i + \cdots + (v_n-v_{n-1})q_n\]
+For each element, $v_j\sum_{i=j}^n p_i \geq v_j\sum_{i=j}^n q_i$, thus we conclude that 
+$v \cdot p \geq v \cdot q$
+
+This is a contradiction to our assumption that $p \prec_v q$, thus under our assumption, for all 
+$\succeq \in L(\geq)$, $p \succeq q$
+\newpage
+
+\section*{Problem 2}
+\paragraph*{Forward}
+Let $v(\emptyset) < v(x) \forall x \in X$. Let $p \geq q$, then by definition $p_x \geq q_x$
+Thus $\sum_{x\in X}p_x v(x) \geq \sum_{x\in X}q_x v(x)$, and $(1-\sum_{x\in X}p_x)v(\emptyset) \leq (1-\sum_{x\in X}q_x)v(\emptyset)$
+
+Consider 
+\[\sum_{x\in X}p_x v(x) + (1-\sum_{x\in X}p_x)v(\emptyset) - \sum_{x\in X}q_x v(x) - (1-\sum_{x\in X}q_x)v(\emptyset)\]
+\[\sum{x \in X} (p_x - q_x) v(x) + (1-\sum_{x\in X}p_x -1+ \sum_{x \in X}q_x)v(\emptyset)\]
+\[\sum{x \in X}_(p_x - q_x) v(x) + (-\sum_{x\in X}p_x + \sum_{x \in X}q_x)v(\emptyset)\]
+Since $p_x \geq q_x$ and $v(\emptyset) < v(x) \forall x \in X$ the above expression is positive.
+Thus 
+\[\sum_{x\in X}p_x v(x) + (1-\sum_{x\in X}p_x)v(\emptyset) \geq \sum_{x\in X}q_x v(x) + (1-\sum_{x\in X}q_x)v(\emptyset)\]
+$p_x \geq q_x \implies p \succeq_v q$. We can get the strict proof by simply removing 
+the equal condition in $\geq$
+
+\paragraph*{Backward}
+Let $\succeq_v$ be monotonic. Suppose that there exists $x \in X$ such that $v(\emptyset) \geq v(x)$. Let $v(\emptyset) \geq v(x_i)$ 
+Choose $p=[0.5 \text{if $x=x_i$, 0 otherwise}]$, $q=\vec{0}$. We observe that $p > q$, by our assumption $p \succ q$, and
+\[\sum_{x\in X}p_x v(x) + (1-\sum_{x\in X}p_x)v(\emptyset) > \sum_{x\in X}q_x v(x) + (1-\sum_{x\in X}q_x)v(\emptyset)\]
+However when we compute this expression, we find that LHS = $0.5v(x_i) + 0.5v(\emptyset)$, and RHS = $v(\emptyset)$
+
+By our assumption $v(\emptyset) \geq v(x_i)$, so we have RHS $\geq$ LHS, but by monotonicity we should have 
+RHS $<$ LHS.
+
+We have reached a contradiction, so there cannot exist such an $x$, and  $v(\emptyset) < v(x)$
+
+$\blacksquare$
+
+\newpage
+
+\section*{Problem 3}
+Consider a cake cutting problem with $n=2$. Agent 0 has utility $U_0$, and is assigned a piece $P_0$, 
+similarly agent 1 has utility $U_1$ and piece $P_1$. The utility of the whole cake is defined as 1.
+
+\paragraph*{Forward}
+Let a distribution satisfy proportionality. Thus $U_0(P_0) \geq 0.5$, 
+and $U_1(P_1) \geq 0.5$. Thus $U_0(P_1) = 1 - U_0(P_0) \leq 0.5$. We can repeat 
+the same reasoning for agent 1 to get $U_1(P_0) \leq 0.5$. Thus the utility of the 
+other piece is at most the utility of the current piece. Thus this division is 
+envy-free.
+
+\paragraph*{Backward}
+Let a distribution satisfy envy-freeness. Then $U_0(P_0) \geq U_0(P_1)$, and 
+$U_1(P_1) \geq U_1(P_0)$. Since $P_0 + P_1 = 1$, $U_0(P_0) + U_0(P_1) = 1$. Then since 
+it is envy free, we must have $U_0(P_0) \geq 0.5$. We can repeat the same reasoning for 
+agent 1 to get $U_1(P_1) \geq 0.5$. Thus the division is proportional.
+
+$\blacksquare$
+\newpage
+
+
+\section*{Problem 4}
+\paragraph*{Guarantee}
+Since Bob choose first, he will choose the piece that maximizes his utility. 
+Whichever way Alice cuts the cake, there will be at least 1 piece with utility 
+$U_B(P_i) \geq 1/3$, thus Bob will pick that one and will get at least 1/3 of their value of the cake.
+
+If Alice divides the cake into sections such that $U_A(P_0) = U_A(P_1) = U_A(P_2)$, then it does not matter 
+how Bob and Carlos picks. She will get at least 1/3 of the value of the cake.
+
+\paragraph*{Envy-free}
+This protocol is not envy-free. Consider the following example.
+
+Alice values the first sections of the cake highly. Let $P_0 = [0, 1/9], P_1=[1/9, 2/9], P_2=[2/9, 1]$, and 
+$U_A(P_i) = 1/3$. Let Bob and Carlos have a uniform utilities: $U_B(P_0) = 1/9, U_B(P_1) = 1/9, U_B(P_2) = 7/9$, $U_C = U_B$.
+
+Then Bob will pick the third piece since it is the highest utility, and Carlos will pick the second or first piece. However, 
+Carlos will envy Bob since according to $U_C$, $P_2$ is also the highest utility piece.
+
+\newpage
+
+
+\section*{Problem 5}
+\paragraph*{No more agents left}
+If we terminate the protocol with no more agents left, we give the remainder of the cake to the last agent. In this scenario, each agent got at least 1/3 of the cake 
+per the protocol. Thus formaly we have $U_i(P_i) \geq 1/3$ for all $i \in [1, n]$. To violate 1/3-envy free, 
+we must have $U_i(P_j) > 2/3$ for some $i, j \in [1, n]$. However, this is impossible since the sum of the utilities is 
+1 and $U_i(P_i) + U_i(P_j) > 1$ by our protocol. Thus such a $j$ cannot exist, and the protocol is 1/3-envy free.
+
+\paragraph*{No more cake left}
+If we terminate the protocol with no more cake left, then we have $U_i(P_i) \geq 1/3$ for all $i \in [1, m]$, let the 
+random agent who got a piece be $m+1$, since they did not call out, we have $0<U_{m+1}P(m+1)<1/3$, and $U_i(P_i) = 0$ for all $i \in [m+2, n]$.
+In this scenario, if $U_i(P_j)>1/3$ for $i \in [m+1, n], j \in [1, m]$, they would have called out and gotten a piece, thus 
+we guarantee that the difference in utility is at most 1/3, and the protocol is 1/3-envy free.
+
+$\blacksquare$
+\newpage
+
+
+\section*{Problem 6}
+\subsection*{1}
+If all agents have the same utility. $U_A = U_B = U_C$, then the cake is cut into 
+$P_0 = P_1 = 1/2$ by Alice. Bob and Alice will cut it into pieces that are equal in value 
+to all 3 of them, resulting in each piece having utility of 1/6. Each agent then picks 2 pieces, 
+and gets a utility of 1/3. Thus the partition satisfies proportionality.
+
+\subsection*{2}
+The cake is cut into 6 pieces. Suppose that we cannot find two pieces that has a sum that is greater in utility than 1/3. 
+Then we observe the greatest $U(P_i + P_j)$ for any $i, j$ is less than 1/3. Thus $\sum_i P_i < 3 \times 1/3 = 1$. 
+However this is a contradiction since the sum of the whole cake is 1. Thus we can always find two pieces that has a sum that is 
+at least 1/3.
+
+Since Carlos picks first, he can always guarantee a utility of at least 1/3.
+
+\subsection*{3}
+Alice first cuts the piece of cake into 2 pieces that are equal good to her and 
+Bob. Then Bob and Alice both cut a piece of cake into 3 pieces that are equally good for each other. 
+By the previous reasoning, Carlos can always guarantee a utility of at least 1/3. Since all the pieces are 
+cut to be equal in value to Alice and Bob, they are each guaranteed to hae a utility of at least 1/3.
+Thus we satisfy proportionality.
+
+\subsection*{Extra Credit}
+\paragraph*{Split into 2}
+Define a function $f = U_0(P_0) - U_1(P_1)$. Since the cake cutting algorithm is essentially integrating a PDF, this 
+function is continuous. Then since we are cutting it into two, $P_1 = 1-P_0$, so $f= U_0(P_0) - U_1(1-P_0)$. Suppose we 
+define $x$ to be the location of the cut, so $P_0 = [0, x], P_1=[x,1]$. Then we have $f(0)=-1$ since agent 1 gets the whole cake, 
+and $f(1)=1$ since agent 0 gets the whole cake. By the intermediate value theorem, there must exist a $c \in (0, 1)$ such that $f(c)=0$.
+This means that there must exist a cut such that the two pieces are equal in value to both agents.
+
+\paragraph*{Split into 3}
+Define a function $f = U_0(P_0) - U_0(P_2) + U_1(P_0)-U_1(P_1)$. Let $P_0 = [0, x], P_1=[x, y], P_2=[y, 1]$. Then we have 
+$f(0, 0) = -1$ since agent 1 gets the whole cake, and $f(1, 1) = 2$ since agent 0 gets the whole cake. 
+$f(0, 1) = -1$
+By the intermediate value theorem, there exists $(x, y)$ such that $f(x,y)=0$, and thus we can find a cut such that the three pieces 
+are equal in value to both agents.
+
+\newpage
+
+\section*{Problem 7}
+We can analyze this through different cases.
+
+\subsection*{Two best pieces are equally good to Bob}
+\paragraph*{Carina}
+Since Carina choose first, she will choose the piece that is best for her.
+
+\paragraph*{Bob}
+Then Bob will choose the piece that is best for him, we know that 
+this exists since the two most valuable pieces are equally good to Bob. 
+
+\paragraph*{Alice}
+Finally, Alice will choose the remaining piece. Since Alice cut the cake into 3 pieces that are equally good to her, 
+she does not envy Bob or Carina. 
+
+Thus the protocol is envy-free.
+
+\subsection*{Carina does not picks $Q_1$}
+\paragraph*{Bob}
+If Carina does not pick $Q_1$, then Bob will pick $Q_1$ per the protocol. Of $Q_1, Q_2, Q_3$, Bob values 
+$Q_1, Q_2$ equally, so he does not envy the agent who gets a piece from $Q$. For the allocation of $P$, since 
+Bob picks first, he does not envy any other agent.
+
+\paragraph*{Carina}
+Since Carina picks first out of $Q_1, Q_2, Q_3$, she does not envy any other agent for the $Q$ selection. For $P$, 
+since she divided it into 3 pieces that are equally good to her, she does not envy any other agent. 
+
+\paragraph*{Alice}
+For Alice, she divided $Q_1+P, Q_2, Q_3$, since $Q_1$ is chosen by Bob, she gets the untrimmed $Q_2$ or $Q_3$, and thus 
+does not envy any other agent for the $Q$ pieces. Since Bob trimmed $Q_1$, Bob's share is $Q_1 + P_1$, and since Alice 
+regards $Q_1+P = Q_2 = Q_3$, she would not envy Bob since $P_1 < P$. Since she is picking before Carina, she gets to choose between 
+$Q_2+P_2$ and $Q_2+P_3$ or between $Q_3+P_2$ and $Q_3+P_3$, and since she considers $Q_2 = Q_3$, she will pick the $P$ piece 
+that is most valuable for her, and thus does not envy Carina.
+
+Thus the protocol is envy-free.
+
+\subsection*{Carina picks $Q_1$}
+\paragraph*{Bob}
+If Carina picks $Q_1$, then Bob will pick $Q_2$ since now $U_B(Q_1) = U_B(Q_2) \geq U_B(Q_3)$. 
+Since $Q_2, Q_3$ are equally good to Bob, he does not envy Carina for the $Q$ piece. For the $P$ piece, 
+Bob cuts it into 3 pieces that are equally good to him, and thus does not envy Carina or Alice.
+
+\paragraph*{Carina}
+Since Carina picks first out of $Q_1, Q_2, Q_3$, she does not envy any other agent for the $Q$ selection. For $P$, 
+since she is picking first, she does not envy any other agent for the $P$ piece. 
+
+\paragraph*{Alice}
+We can repeat the same reasoning as in the previous case. Alice divided $Q_1+P, Q_2, Q_3$, since $Q_1$ is chosen by Carina, she gets the untrimmed $Q_2$ or $Q_3$, and thus 
+does not envy any other agent for the $Q$ pieces. Since Bob trimmed $Q_1$, Carina's share is $Q_1 + P_1$, and since Alice 
+regards $Q_1+P = Q_2 = Q_3$, she would not envy Carina since $P_1 < P$. Since she is picking before Bob, she gets to choose between 
+$Q_2+P_2$ and $Q_2+P_3$ or between $Q_3+P_2$ and $Q_3+P_3$, and since she considers $Q_2 = Q_3$, she will pick the $P$ piece 
+that is most valuable for her, and thus does not envy Bob.
+
+Thus the protocol is envy-free.
+\end{document}
