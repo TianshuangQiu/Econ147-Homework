@@ -1,0 +1,223 @@
+\documentclass[12pt]{article}
+\usepackage[usenames]{color} %used for font color
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{wasysym}
+\usepackage[utf8]{inputenc} %useful to type directly diacritic characters
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{mathtools}
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+\graphicspath{ {./} }
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\prob}{\mathbb{P}}
+\newcommand{\degrees}{^{\circ}}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\author{Tianshuang (Ethan) Qiu}
+\begin{document}
+\title{Algorithmic Economics, PS3}
+\maketitle
+
+\section*{Problem 1}
+The shaply value is defined as $\phi_i(v) = \frac{1}{n}\sum_R[v(P_i^R \cup {i})-v(P_i^R)]$
+where $P_i^R$ is the set of players in the coalition $R$ that precede $i$ in the order $R$.
+
+Consider two games $v. w$, let $\Delta_i^v(S) \leq \Delta_i^w(S)$ for all $S \subseteq N$. Then we must have 
+that $\phi_i^v \leq \phi_i^w$ since each element of the average is smaller for $v$ than for $w$.
+Thus we have shown the the Shapley value satisfies the axiom of marginality.
+
+Now consider the axiom of subsitute player. Consider a game $v$ and players $i, j \in N$ be subsitutes. Then we have 
+that $\Delta_i^v(S) = \Delta_i^w(S)$ for any $i, j \not\in S$. Then when we compute the Shapley value, 
+for each term before $i$ and $j$ are added, the difference in value after they get added is the same. 
+Therefore, the Shapley value satisfies the axiom of substitute player.
+
+\newpage
+\section*{2}
+Let $(N. v_T)$ be a simple game, let $T \subseteq N$, and $v=a\times v_T$, $a > 0$.
+Consider $i \not \in T$, then the agent's inclusion is irrelevant to the overall value of the coalition.
+Therefore, no matter the order of the agent in the coalition, the value itself does not change, therefore 
+$\Delta_i^v(S) = 0$.
+
+Now consider $i \in T$, then the agent's inclusion adds $a$ to the value of the coalition only if it is the last member of $T$. Therefore 
+for a given $i \in T$, there exists $\frac{N!}{T}$ permutations where $i$ is the last member of $T$. Consider if we pick out all members of $T$ from all 
+permutations, then this forms a random permutation of $T$. Any given random permutation of $T$ is equally likely to be sampled from $N!$, then since we limit 
+ourselves to $i$ being the last element, we have a $\frac{1}{|T|}$ chance of sampling the correct permutation. Therefore, we have a total amount of 
+$\frac{N!}{|T|}$ such permutations. Therefore, we have $\phi_i(v) = \frac{1}{N!}\frac{N!}{|T|}a = \frac{a}{|T|}$.
+
+
+\newpage
+\section*{3}
+Let $s$ satisfy marginality. Let $\Delta_i^v(P) = \Delta_i^w(P)$ for all $P \subseteq N$. Then we have $\Delta_i^v(P) \leq \Delta_i^w(P)$, 
+by marginality we have $s_i^v \leq s_i^w$. Similarly, we have $\Delta_i^w(P) \leq \Delta_i^v(P)$, and by marginality we have $s_i^w \leq s_i^v$. 
+Therefore we can conclude that $s_i^v = s_i^w$. 
+
+Thus $s$ must depend only on the palyer's marginal contributions. If it depends on any other factor, 
+we can construct a game $v$ with agents $i, j$ such that $\Delta_i^v(P) = \Delta_i^w(P)$ for all $P \subseteq N$, but they have different values on the factor 
+that $s$ depends on. Then we would have $s_i^v \neq s_i^w$, which is absurd. Therefore $s$ must only be a function of the player's marginal contributions.
+
+
+\newpage
+\section*{4}
+\subsection*{1}
+If the seller is not present in the coalition, no value can be generated. Therefore if 
+$1 \not\in S$, we have $v(S)=0$. If the seller is alone, the item is worth $w_1$ to him. If a buyer is present, 
+the seller sells the item to the buyer, and the value of the coalition is the value of the buyer. When both buyers 
+are present, the seller sells the item to the buyer with the highest value ($w_3 > w_2 > w_1$). Therefore, the value of the grand coalition is 
+$w_3$.
+
+\subsection*{2}
+Let $X = (x_1, x_2, x_3)$ be the core of the game. We know that $V(X)=w_3$, and to allocate this value, 
+we know that $1$ sold to $3$, so $x_2=0$. Since if $x_2 > 0$, $V(x_1, x_3) = w_3$, which is greater than their 
+current value $w_3-x_2$. Therefore, the core of the game has $x_2=0$ 
+
+Consider $x_1$, since $V(N) = w_3$, $x_1 \leq w_3$. If $x_1 < w_2$, then $V(\{1, 2\}) = w_2$, which is greater than 
+$V(\{1, 2\}) < w_2 + 0 = w_2$, and thus $\{1, 2\}$ can get a better value by excluding $3$. Therefore, to maintain the core, we must have 
+$w_3 \geq x_1 \geq w_2$
+
+Consider $x_3$, if $x_3> w_3-w_2$, then $x_1 = w_3-x_3 < w_2$. $V(\{1, 2\}) = w_2$, which is greater than 
+$V(\{1, 2\}) < w_2 + 0 = w_2$, and thus $\{1, 2\}$ can get a better value by excluding $3$. Therefore, to maintain the core, we must have
+$w_3-w_2 \geq x_3 \geq 0$
+% TODO: finish the proof 
+
+From the viewpoint of the seller, the best imputation of maximizes $x_1$, so $x_1 = w_3$ and $x_2 = x_3 = 0$. 
+From the viewpoint of the buyers, $x_2=0$ regardless of the coalition, and $x_3$ has a maximum value of $w_3-w_2$, so 
+the best imputation is $x_1 = w_2$, $x_2 = 0$, and $x_3 = w_3-w_2$.
+
+
+\subsection*{3}
+For each of the 6 potential orders, we compute the Shapley value for each.
+
+We have $\phi_1(v) = (2w_1+w_2+3w_3)/6$, $\phi_2(v) = (w_2-w_1)/6$,
+$\phi_3(v) = (3w_3-w_1-2w_2)/6$
+
+Since $x_2 > 0$, the Shapley value is not in the core.
+
+
+\newpage
+\section*{5}
+\subsection*{1}
+Veto players are a set of players that are in \textbf{all} winning sets. Now let $V = \emptyset$
+Let $x$ be an imputation, select $S=\{i \in N x_i>0\}$, choose $i \in S$ and a 
+coalition T such that $i \not\in T$. 
+$\sum_{j \in T}x_j \leq 1-x_i < 1 = V(T)$. We know that $T$ exists because $V(N)$, and since the set of 
+veto players is empty, we can find such a coalition. Therefore, we have found another coalition that gets the same value 
+by excluding $i$. Therefore, the core of the game is empty.
+
+\subsection*{2}
+Let $V \neq \emptyset$, and let $x$ be a core imputation. Assume that $\exists j$ such that $x_j > 0$ but $x_j \not \in V$. Then we can construct 
+a coalition of only veto players, and $\sum_{j\in V}x_i \leq 1-x_j < 1 = V(V)$. Thus the veto players can get a higher value 
+if they exclude $j$. This violates the core. Therefore, we must have $x_j = 0$ for all $j \not\in V$.
+
+Now consider the converse. Let $x$ be an imputation, and $x_j = 0$ for all $j \not\in V$. Then suppose that $x$ is not the core, so there exists and coalition $Q$ such 
+that $V(Q) > V(S)$. However, since we know that $V(N) = 1$, $V(P) \leq 1 \forall P \subseteq N$. Thus it is impossible that 
+$V(Q) > V(S) = 1$. Then we consider if we can have less players in our set. However, by the definition of veto players, 
+we know that $V(S) = 1$ for all $S \subseteq T$, thus if $Q$ excludes any veto player, $V(Q) = 0$.
+Therefore, such a $Q$ does not exist, and $x$ is in the core.
+
+
+\newpage
+\section*{6}
+
+\subsection*{1}
+$\Delta_i^v(S(\geq, i)) = V(S\cup\{i\}) - V(S)$ for some ordering of $S$. Since we know that $i \not\in S$, $A\cap B = \emptyset$
+By convexity we know that $V(S\cup\{i\}) \geq V(S) + V(\{i\})$. Thus $\Delta_i^v(S(\geq, i)) = V(S\cup\{i\}) - V(S) \geq V(\{i\}) \geq 0$.
+Thus $x_i \geq 0$
+
+Consider $\sum_{i \in N}x_i$, we know that the grand coalition has value $V(N)$, and $V(\emptyset) = 0$. Thus in our ordering, 
+we can compute $\sum_{i \in N}\Delta_i^v S(\geq, i) = V(\{1\}) - V(\emptyset)+V(\{1,2\}) - V(\{1\}) + \ldots$. 
+This sum telescopes to $V(N) - V(\emptyset) = V(N)$. Thus $\sum_{i \in N}x_i = V(N)$
+\subsection*{2}
+Let $A\subseteq B$, and let $C = A \setminus B$. 
+We first apply the definition of $\Delta$
+\[\Delta_i^v(A) = V(A\cup\{i\}) - V(A)\]
+\[\Delta_i^v(B) = V(B\cup\{i\}) - V(B) = V(C\cup (A \cup\{i\})) - V(A \cup C)\]
+Then we apply the property of convexity
+\[\Delta_i^v(B) \geq V(C)+V(A \cup\{i\}) - V(A\cup C)\]
+\[\Delta_i^v(A) = V(A\cup\{i\}) - V(A) + V(C) - V(C)\]
+Finally, we do some algebraic manipulation
+\[\Delta_i^v(A)-V(C) \leq V(A\cup\{i\}) - V(A \cup C)\]
+\[\Delta_i^v(B)-V(C) \geq V(A \cup \{i\}) - V(A\cup C)\]
+Thus we have $\Delta_i^v(A)-V(C) \leq \Delta_i^v(B)-V(C)$, and thus $\Delta_i^v(A) \leq \Delta_i^v(B)$
+
+\subsection*{3}
+In part 1, we have proven that $x_i \geq 0$ and $\sum_i x_i = V(N)$, thus $x$ is an imputation.
+Let $x$ be an imputation, for any subset of agents, we can fix an ordering $\{x_j \ldots x_k\}$, we have $V(\{x_j \ldots x_k\}) = \sum_{i=j}^k \Delta x_i$
+
+Using the same reasoning as subsection 1, we can express $V(S)$ as a telescoping sum. However, when $S$ was in the original superset, 
+there are $j-1$ elements before the first element of $S$, and $n-k$ elements after the last element of $S$. Thus by convexity, the marginal 
+contributions of $S$ would have been larger when it was part of the superset compared to when it was part of the subset. 
+
+Thus the agents in this set do not benefit from deviating.
+\[V(S) = \sum_{i = j}^{k} \Delta^v(\{x_j \ldots x_k\}) \leq \sum_{i \in S}x_i\]
+
+
+\subsection*{4}
+We know that the from the previous subsection, $\Delta_i^v S(\geq, i)$ is in the core for any ordering. Since the core is 
+a convex set, the average of all $\Delta_i^v S(\geq, i)$ is also in the core. This value is precisely the Shapley value. 
+Therefore the Shapley value is in the core.
+
+
+\newpage
+\section*{7}
+We can show that the core of a simple game is non-empty by proving a
+certain imputation lies in the core. Specifically the imputation where each
+agent $x \in T$ gets $\frac{1}{|T|}$. 
+
+For all players, $V(x_i) \geq 0$. 
+
+Let our assignment be $X$. For all coalitions, if $T \subseteq S$, then $V(S) = \sum_{i \in S} x_i = 1 = V(N)$. 
+In this case, the players do not get a benefit from leaving the coalition. If $T \not\subseteq S$, 
+then $V(S) = 0 < \sum_{i \in S} x_i = 0 < \sum_{i \in S}x_i = \frac{n}{|T|}$ where $n$ is the amount of $T$ members in $S$.
+Thus in this case, the players also do not get a benefit from leaving the coalition. Finally $\sum_{i \in S}x_i = 1 = V(N)$. 
+Thus $X$ is in the core.
+
+To describe all core imputations, we must have $x_i = 0$ for $i \not \in T$. Otherwise, the coalition 
+can exclude the player not in the winning section and get a better value. For members of the $T$ coalition, we simply need to 
+ensure that $\sum_{i \in T} x_i= 1 = V(N)$ and $x_i \geq 0$. This ensures that we satisfy the requirements of 
+an imputation, and the $T$ players cannot benefit by forming another coalition. 
+
+\newpage
+\section*{8}
+\subsection*{1}
+Let the core of the game be non-empty. So let $x$ be in the core. By definition, $V(S) \geq \sum_{i\in S} x_i$ for any $S \subseteq N$. 
+Furthermore, we have $V(S)= f(|S|)$. Consider a function that re-orders the elements, let the allocation be $x^y = \{x_{y1}, x_{y2}, \ldots, x_{yn}\}$
+We will show that for every mapping $y$, $x^y$ is in the core. 
+
+Let the remapped set be $S* = \{y_1, y_2, \ldots\}$
+Let the original set be $S'$. Since $x$ is in the core, we know that $V(S') \leq \sum_{j=0}^kx_{i+j}$. Since it was 
+just relabelling, we know that $V(S) = V(S') = f(|S|)$ since the total amount of items within this set has not changed.
+
+Now given all shuffling of $x$, $x^y$ also lies in the core. We know that the average must also lie in the core since 
+the core is convex. The average would be $\frac{\sum_{i=1}^{n}x_i}{n}$ which by definition is equal to $\frac{V(N)}{n} = \frac{f(n)}{n}$.
+
+Thus (f(n)/n, f(n)/n, \ldots, f(n)/n) is in the core.
+
+
+\subsection*{2}
+If $\frac{f(x)}{x}\leq \frac{f(n)}{n}$ for all $x \in \{1, \ldots, n\}$, then the core is 
+non-empty. 
+
+$V(S) = f(|S|) \leq \frac{f(n)|S|}{n}$
+Let $x$ be an imputation that assigns $\frac{f(n)}{n}$ to all agents. Since everyone in this imputation gets 
+the same assignment, $\sum_{i \in S}x_i = |S| \frac{f(n)}{n}$
+
+Thus $V(S) = f(S) \leq \frac{|S|f(n)}{n} = \sum_{i \in S}x_i$ for all $S$, and $x$ is in the core. 
+Thus the core is not empty.
+
+\subsection*{3}
+Assume that $n \geq 2$, and we want to show that the core is empty. Assume that there exists an imputation $x$ that is in the core. 
+Select some $j \in N$, by the problem statement
+$\sum_{i \neq j}x_i = (M-n)-x_j < M-1$. We know that $x_j \geq 0$ and $n \geq 2$, thus 
+$\sum_{i \neq j}x_i = V(\{i \in N: i \neq j\})$
+
+Since $V(S) \geq \sum_{i \in S}x_i$, all the members but one will always have an incentive to devaite and 
+throw all trash into the excluded player's garden. Thus the core is empty.
+\end{document}
